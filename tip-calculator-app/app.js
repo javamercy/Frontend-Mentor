@@ -1,6 +1,9 @@
 const tipBoxes_el = document.querySelectorAll(
   ".tip-box:not(.tip-box:nth-child(6)"
 );
+
+const customTipBox_el = document.querySelector(".custom");
+
 const billInput_el = document.querySelector(".bill-input");
 const peopleNumberInput_el = document.querySelector(".people-number-input");
 
@@ -21,12 +24,20 @@ billInput_el.addEventListener("input", (e) => {
 tipBoxes_el.forEach((tipBox) =>
   tipBox.addEventListener("click", (e) => {
     clearClicks();
+    customTipBox_el.value = "";
+
     tip = +e.target.attributes["data-tip"].nodeValue;
     e.target.classList.add("clicked");
 
     checkFinalResults();
   })
 );
+
+customTipBox_el.addEventListener("input", (e) => {
+  clearClicks();
+
+  tip = +e.target.value;
+});
 
 peopleNumberInput_el.addEventListener("input", (e) => {
   people = +e.target.value;
@@ -41,6 +52,11 @@ resetBtn_el.addEventListener("click", (e) => {
   peopleNumberInput_el.value = "";
   tipAmount_el.textContent = "0.00";
   total_el.textContent = "0.00";
+  customTipBox_el.value = "";
+
+  bill = null;
+  tip = null;
+  people = null;
   clearClicks();
 });
 
